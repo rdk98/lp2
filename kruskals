@@ -1,0 +1,44 @@
+INF=float('inf')
+V=5
+cost=[[INF,2,6,8,19],
+      [2,INF,12,5,3],
+      [6,12,INF,1,8],
+      [8,5,1,INF,9],
+      [19,3,8,9,INF]]
+
+parent=[i for i in range (V)]
+
+def find(i):
+    while parent[i]!=i:
+        i=parent[i]
+    return i
+        
+def union(i,j):
+    a=find(i)
+    b=find(j)
+    parent[a]=b
+    
+def kruskalsMST(cost):
+    mincost=0
+    no_edge=0
+    
+    while no_edge < V - 1:
+        minimum=INF
+        a=-1
+        b=-1
+        
+        for i in range(V):
+            for j in range(V):
+                if find(i)!=find(j) and cost[i][j]<minimum:
+                    minimum=cost[i][j]
+                    a=i
+                    b=j
+        union(a,b)
+    
+        print('Edge {} :({},{}), cost:{}'.format(no_edge,a,b,minimum))
+        no_edge+=1
+        mincost+=minimum
+    
+    print("Minimum Cost:", mincost)
+    
+kruskalsMST(cost)
