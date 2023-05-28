@@ -1,0 +1,31 @@
+def job_squencing(jobs):
+    jobs.sort(key = lambda x : x[2], reverse = True)
+    
+    max_deadline = max(jobs, key = lambda x : x[1])[1]
+    
+    schedule = [-1]* max_deadline
+    total_profit = 0
+    
+    for job in jobs:
+        deadline = job[1]
+        profit = job[2]
+        
+        for i in range(deadline -1, -1, -1):
+            if schedule[i] == -1:
+                schedule[i] = job[0]
+                total_profit += profit
+                break
+    
+    return schedule, total_profit
+
+jobs = [
+    (1, 2, 100), 
+    (2, 1, 50), 
+    (3, 2, 120), 
+    (4, 1, 80), 
+    (5, 3, 200)
+]
+
+scheduled_jobs, total_profit = job_squencing(jobs)
+print('Scheduled Jobs : ', scheduled_jobs)
+print('Total Profit : ', total_profit)
